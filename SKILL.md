@@ -89,10 +89,24 @@ produces — generate first, then edit only the data.
    The `verify`/`run` project skills also apply. A green `npm run build` plus the
    backend self-check is the bar before committing.
 
+   If a **Playwright MCP** is configured, use it to verify the running web app end
+   to end rather than only trusting the build: `npm run dev`, then drive the page —
+   load `http://localhost:5173`, step through a couple of dates on the strip, click
+   a pin, and confirm the card renders stat tiles and a per-variable chart with no
+   console errors. A screenshot of the map with pins is a good regression artifact.
+
 5. **Wire real forecast data** when the demo looks right — see
    `references/weather-data.md`. In short: `uv sync --extra ifs`, authenticate to
    Arraylake, and run `recompute.py --source ifs`. The demo and ifs sources emit
    the **same** contract, so the frontend does not change.
+
+   If an **Arraylake MCP** is configured, use it to discover datasets before
+   writing any extraction code: `list_orgs` → `list_repos` to find the forecast
+   store, then `get_dataset_info` to confirm the group layout, variable names
+   (`2t`, `2d`, `10u`/`10v`, `ssrd`), coordinates, and chunking. The default store
+   is `spring-data/ecwmf-ifs-15-days-forecast-open`, but the MCP is how you verify
+   it exists, is readable, and matches what `weather_ifs.py` expects — or find an
+   alternative (e.g. ERA5) for historical normals.
 
 6. **Deploy to GitHub Pages.** Create the `owner/name` repo, push, and set
    **Settings → Pages → Source → GitHub Actions**. `.github/workflows/pages.yml`

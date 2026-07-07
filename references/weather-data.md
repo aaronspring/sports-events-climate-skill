@@ -21,6 +21,14 @@ site is fully functional on demo data.
 Arraylake (managed Icechunk/Zarr). It joins two slices into one continuous line
 per point:
 
+> **Discover the store with the Arraylake MCP first.** If an Arraylake MCP is
+> configured, call `list_orgs` → `list_repos` to find the forecast repo, then
+> `get_dataset_info` on it to confirm the group, the variable names (`2t`, `2d`,
+> `10u`/`10v`, `ssrd`), the coordinate ranges, and the chunk shape before you
+> touch `weather_ifs.py`. It is the fastest way to check the repo exists and is
+> readable with your credentials, and to swap in a different store (a newer IFS
+> repo, or ERA5 for historical normals) without guessing at its layout.
+
 - **best estimate** — `step=0` across every 6-hourly init: recent conditions up
   to now.
 - **forecast** — the latest populated init, all steps: the 0…15-day outlook.
